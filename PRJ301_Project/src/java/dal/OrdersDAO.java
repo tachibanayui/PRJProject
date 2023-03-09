@@ -12,7 +12,9 @@ import model.Order;
  * @author Viet
  */
 public class OrdersDAO extends MyDAO {
-
+//    public List<Orders> getOrderLst
+    
+    
     public void insert(String username) throws SQLException {
         this.xSql = "Insert into Orders(Username) values (?)";
         ps = this.connection.prepareStatement(xSql);

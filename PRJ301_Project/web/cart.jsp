@@ -21,6 +21,7 @@
                 <input type="submit" name="action" value="Delete"/>
             </form>
         </c:forEach>
+        <p>Total: ${total}</p>
         <form action="/cart/all" method="post">
             <input type="submit" name="action" value="Delete All"/>
             <input type="submit" name="action" value="Place Order"/>

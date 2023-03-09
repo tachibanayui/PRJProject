@@ -41,14 +41,17 @@ public class CartServlet extends HttpServlet {
             Order o = dord.getCart(username);
             List<OrderDetail> ods = dod.getDetails(o.getOrderID());
             HashMap<Integer, Product> products = new HashMap<>();
+            double total = 0;
             
             for(OrderDetail od: ods) {
                 Product p = dp.getProduct(od.getProductID());
                 products.put(od.getProductID(), p);
+                total += od.getUnitPrice();
             }
             
             request.setAttribute("cartItems", ods);
             request.setAttribute("products", products);
+            request.setAttribute("total", total);
             request.getRequestDispatcher("/cart.jsp").include(request, response);
         } else {
             response.sendRedirect("/login");
@@ -96,6 +99,10 @@ public class CartServlet extends HttpServlet {
                 } else if (action.equals("Delete") && p != null) {
                     dord.setProductToCart(username, p.getProductID(), 0);
                 } else if (action.equals("Update") && p != null) {
+                    String sNum = request.getParameter("quantity");
+                    int xNum = Integer.parseInt(sNum);
+                    dord.setProductToCart(username, p.getProductID(), xNum);
+                } else if (action.equals("Add To Cart") && p != null) {
                     String sNum = request.getParameter("quantity");
                     int xNum = Integer.parseInt(sNum);
                     dord.setProductToCart(username, p.getProductID(), xNum);
