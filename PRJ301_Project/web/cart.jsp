@@ -13,8 +13,17 @@
         <title>Your fucking cart</title>
     </head>
     <body>
-        <c:forEach var="{item}" items="{cartItems}">
-            
+        <c:forEach var="item" items="${cartItems}">
+            <p>${products[item.productID].productName}</p>
+            <form action="/cart/${item.productID}" method="post">
+                <input type="number" name="quantity" value="${item.quantity}" required/>
+                <input type="submit" name="action" value="Update"/>
+                <input type="submit" name="action" value="Delete"/>
+            </form>
         </c:forEach>
+        <form action="/cart/all" method="post">
+            <input type="submit" name="action" value="Delete All"/>
+            <input type="submit" name="action" value="Place Order"/>
+        </form>
     </body>
 </html>
