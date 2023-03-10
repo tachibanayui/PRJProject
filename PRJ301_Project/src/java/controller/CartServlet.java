@@ -94,7 +94,7 @@ public class CartServlet extends HttpServlet {
                 
                 if(action.equals("Delete All")) {
                     dord.deleteAllCartItems(username);
-                } else if (action.equals("Delete") && p != null) {
+                } else if (action.equals("Remove") && p != null) {
                     dord.setProductToCart(username, p.getProductID(), 0);
                 } else if (action.equals("Update") && p != null) {
                     String sNum = request.getParameter("quantity");
