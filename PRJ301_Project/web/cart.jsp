@@ -24,6 +24,10 @@
         <p>Total: ${total}</p>
         <form action="/cart/all" method="post">
             <input type="submit" name="action" value="Delete All"/>
+        </form>
+        
+        <form action="/orders" method="post">
+            Ship Address: <input type="text" name="shipAddress" value="${shipAddress}" required/> 
             <input type="submit" name="action" value="Place Order"/>
         </form>
     </body>

@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 import model.Product;
+import utils.ServletUtils;
 
 /**
  *
@@ -29,13 +30,13 @@ public class IndexServlet extends HttpServlet {
     private CategoriesDAO dc;
     private void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            String sSort = request.getParameter("sort");
-            String sCategory = request.getParameter("category");
-            String sPriceLow = request.getParameter("priceLow");
-            String sPriceHigh = request.getParameter("priceHigh");
-            String sPage = request.getParameter("page");
+            String sSort = ServletUtils.getParamSetAttr(request, "sort");
+            String sCategory = ServletUtils.getParamSetAttr(request, "category");
+            String sPriceLow = ServletUtils.getParamSetAttr(request, "priceLow");
+            String sPriceHigh = ServletUtils.getParamSetAttr(request, "priceHigh");
+            String sPage = ServletUtils.getParamSetAttr(request, "page");
             
-            String sSearch = request.getParameter("search");
+            String sSearch = ServletUtils.getParamSetAttr(request, "search");
             boolean xSort = sSort != null && sSort.equals("asc");
             
             int xCat = -1;
@@ -59,8 +60,12 @@ public class IndexServlet extends HttpServlet {
             } catch (Exception e) {}
             
             List<Product> ps = dp.getProductList(sSearch, xCat, xLow, xHigh, xPage, 10, xSort);
+            int count = dp.getProductListCount(sPage, xCat, xLow, xHigh, xPage, 10, xSort);
             request.setAttribute("categories", dc.getCategories());
             request.setAttribute("products", ps);
+            request.setAttribute("count", count);
+            
+            request.setAttribute("search", sSearch);
             request.getRequestDispatcher("index.jsp").include(request, response);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -114,3 +119,4 @@ public class IndexServlet extends HttpServlet {
         this.dp = new ProductsDAO();
     }
 }
+

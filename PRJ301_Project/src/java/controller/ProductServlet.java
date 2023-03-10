@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Product;
+import utils.ServletUtils;
 
 /**
  *
@@ -43,7 +44,7 @@ public class ProductServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             String id = request.getPathInfo();
-            Product p = getProduct(id);
+            Product p = ServletUtils.getProduct(id, dp);
             if (p != null) {
                 request.setAttribute("product", p);
                 request.getRequestDispatcher("/product.jsp").include(request, response);
@@ -53,22 +54,6 @@ public class ProductServlet extends HttpServlet {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    Product getProduct(String id) throws SQLException {
-        if (id == null) {
-            return null;
-        }
-        id = id.substring(1);
-
-        int xId;
-        try {
-            xId = Integer.parseInt(id);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-
-        return dp.getProduct(xId);
     }
 
     /**
@@ -83,12 +68,9 @@ public class ProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            Object xus = request.getSession().getAttribute("username");
-            if (xus == null) {
-                response.sendRedirect("/login");
-            } else {
-                String username = xus.toString();
-                Product p = getProduct(request.getPathInfo());
+            String username = ServletUtils.getLoginUsername(request, response, true);
+            if (username != null) {
+                Product p = ServletUtils.getProduct(request.getPathInfo(), dp);
                 if (p == null) {
                     response.sendRedirect("/");
                 } else {

@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import model.Order;
 import model.OrderDetail;
 import model.Product;
+import utils.ServletUtils;
 
 /**
  *
@@ -35,9 +36,8 @@ public class CartServlet extends HttpServlet {
     OrderDetailsDAO dod;
     
     void process(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-        Object obj = request.getSession().getAttribute("username");
-        if(obj instanceof String) {
-            String username = obj.toString();
+        String username = ServletUtils.getLoginUsername(request, response, true);
+        if(username != null) {
             Order o = dord.getCart(username);
             List<OrderDetail> ods = dod.getDetails(o.getOrderID());
             HashMap<Integer, Product> products = new HashMap<>();
@@ -52,9 +52,8 @@ public class CartServlet extends HttpServlet {
             request.setAttribute("cartItems", ods);
             request.setAttribute("products", products);
             request.setAttribute("total", total);
+            request.setAttribute("shipAddress", o.getShipAddress());
             request.getRequestDispatcher("/cart.jsp").include(request, response);
-        } else {
-            response.sendRedirect("/login");
         }
     }
     
@@ -86,13 +85,12 @@ public class CartServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        Object obj = request.getSession().getAttribute("username");
+        String username = ServletUtils.getLoginUsername(request, response, true);
         String action = request.getParameter("action");
         
-        if(obj instanceof String && action != null) {
+        if(username != null && action != null) {
             try {
-                String username = obj.toString();
-                Product p = getProduct(request.getPathInfo());
+                Product p = ServletUtils.getProduct(request.getPathInfo(), dp);
                 
                 if(action.equals("Delete All")) {
                     dord.deleteAllCartItems(username);
@@ -112,32 +110,9 @@ public class CartServlet extends HttpServlet {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-            
-        } else {
-            response.sendRedirect("/login");
         }
     }
     
-     Product getProduct(String id) throws SQLException {
-        if (id == null) {
-            return null;
-        }
-        id = id.substring(1);
-
-        int xId;
-        try {
-            xId = Integer.parseInt(id);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-
-        return dp.getProduct(xId);
-    }
-    
-    
-    
-    
-
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description
