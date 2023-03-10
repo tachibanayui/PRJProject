@@ -23,7 +23,7 @@ import model.Product;
  *
  * @author Yui
  */
-@WebServlet(name = "IndexServlet", urlPatterns = {"/"})
+@WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
  private ProductsDAO dp;
     private CategoriesDAO dc;
@@ -57,7 +57,6 @@ public class IndexServlet extends HttpServlet {
             try {
                xPage = Integer.parseInt(sPage) - 1;
             } catch (Exception e) {}
-            
             List<Product> ps = dp.getProductList(sSearch, xCat, xLow, xHigh, xPage, 10, xSort);
             request.setAttribute("categories", dc.getCategories());
             request.setAttribute("products", ps);
