@@ -95,8 +95,7 @@ public class ProductServlet extends HttpServlet {
                     String sQuantity = request.getParameter("quantity");
                     int xQuantity = Integer.parseInt(sQuantity);
                     dord.addProductToCart(username, p.getProductID(), xQuantity);
-                    response.sendRedirect(request.getRequestURI());
-                    request.setAttribute("status", "Add to cart successful");
+                    response.sendRedirect("/cart");
                 }
             }
 

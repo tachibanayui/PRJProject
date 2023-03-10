@@ -17,7 +17,7 @@
         <p>${product.unitsInStock} remaining</p>
         <form action="${product.productID}" method="post">
             Amount <input type="number" name="quantity" value="1"/>
-            <input type="submit" value="Add to cart"/>
+            <input type="submit" name="action" value="Add to cart"/>
         </form>
     </body>
 </html>

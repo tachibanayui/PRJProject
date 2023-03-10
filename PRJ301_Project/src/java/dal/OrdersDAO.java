@@ -12,14 +12,23 @@ import model.Order;
  * @author Viet
  */
 public class OrdersDAO extends MyDAO {
-
+//    public List<Orders> getOrderLst
+    
+    
     public void insert(String username) throws SQLException {
         this.xSql = "Insert into Orders(Username) values (?)";
         ps = this.connection.prepareStatement(xSql);
         ps.setString(1, username);
         ps.execute();
     }
-
+    
+    public void delete(int orderId) throws SQLException {
+        this.xSql = "Delete from Orders where OrderID = ?";
+        this.ps = this.connection.prepareStatement(xSql);
+        ps.setInt(1, orderId);
+        ps.execute();
+    }
+    
     public Order getCart(String username) throws SQLException {
         this.xSql = "Select * from Orders where Username = ? and Status = 0";
         this.ps = this.connection.prepareStatement(xSql);
@@ -32,6 +41,11 @@ public class OrdersDAO extends MyDAO {
             insert(username);
             return getCart(username);
         }
+    }
+    
+    public void deleteAllCartItems(String username) throws SQLException {
+        Order o = getCart(username);
+        delete(o.getOrderID());
     }
 
     public void addProductToCart(String username, int productId, int quantity) throws SQLException {

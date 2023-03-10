@@ -21,7 +21,7 @@ public class ProductsDAO extends MyDAO {
         }
         
         String queryCategory = "1 = 1";
-        if(categoryId == -1) {
+        if(categoryId != (-1)) {
             queryCategory = String.format("CategoryId = %d", categoryId);
         }
         
