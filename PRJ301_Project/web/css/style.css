@@ -339,6 +339,9 @@ input {
     border: 1px solid #ff523b;
     padding: 5px;
 }
+input [type="submit"]{
+    background-color: white;
+}
 input:focus{
     outline: none;
 }
@@ -358,6 +361,105 @@ input:focus{
 .page-btn span:hover{
     background: #ff523b;
     color: #fff;
+}
+/* single product details */
+.single-product{
+    margin-top: 80px;
+}
+.single-product .col-2 img{
+    padding: 0;
+}
+.single-product .col-2{
+    padding: 20px;
+}
+.single-product h4{
+    margin: 20px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+.single-product input{
+    width: 50px;
+    height: 40px;
+    padding-left: 10px;
+    font-size: 20px;
+    margin-right: 10px;
+}
+input:focus {
+    outline:none;
+}
+.single-product input[type="submit"]{
+    width: 200px;
+    border-radius: 5px;
+    background-color: white;
+}
+.single-product .fa{
+    color: #ff523b;
+    margin-left: 10px;
+}
+
+
+
+/*--- cart items -----*/
+.cart-page{
+    margin: 80px auto;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.cart-info{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+th{
+    text-align: left;
+    padding: 5px;
+    color: #fff;
+    background-color: #ff523b;
+    font-weight: normal;
+}
+td{
+    padding: 10px 5px;
+}
+td input[type="number"]{
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+}
+td img{
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+
+.total-price{
+    display: flex;
+    justify-content: flex-end;
+}
+.total-price table{
+    border-top: 3px solid #ff523b;
+    width: 100%;
+    max-width: 200px;
+}
+td:last-child{
+    text-align: right;
+}
+th:last-child{
+    text-align: right;
+}
+.cart td:last-child{
+    text-align: center;
+}
+.cart th:last-child{
+    text-align: center;
+}
+.option{
+    margin-left: 100px;
+    margin-right: 55px;
+}
+.cart-page input[type="submit"]{
+    width: 110px;
 }
 /*Start Responsive*/
 .menuicon{

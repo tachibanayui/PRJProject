@@ -55,8 +55,8 @@
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
-                    <input type="number" name="priceLow" placeholder="low">
-                    <input type="number" name="priceHigh" placeholder="high">
+                    <input type="number" name="priceLow" placeholder="From Price">
+                    <input type="number" name="priceHigh" placeholder="To Price">
                     <select name="category">
                         <c:forEach var="catItem" items="${categories}">
                             <option value="${catItem.categoryID}">${catItem.categoryName}</option>
@@ -66,14 +66,15 @@
                 </form>
             </div>
             <div class="row">
-                <c:forEach var="p" items="${products}">
+                <c:forEach var="p" items="${requestScope.products}">
                     <div class="col-4">
+                        <a href="product/${p.productID}">
                         <img src="${p.imageUrl}" alt="">
                         <h4>${p.productName}</h4>
                         <p>${p.unitPrice}<span class="lastprice">${p.unitPrice*1.25}</span></p>
+                        </a>
                     </div>
                 </c:forEach>
-
             </div>
             <div class="page-btn">
                 <span>1</span>

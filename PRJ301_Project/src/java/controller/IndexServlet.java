@@ -57,7 +57,7 @@ public class IndexServlet extends HttpServlet {
             try {
                xPage = Integer.parseInt(sPage) - 1;
             } catch (Exception e) {}
-            List<Product> ps = dp.getProductList(sSearch, xCat, xLow, xHigh, xPage, 10, xSort);
+            List<Product> ps = dp.getProductList(sSearch, xCat, xLow, xHigh, xPage, 8, xSort);
             request.setAttribute("categories", dc.getCategories());
             request.setAttribute("products", ps);
             request.getRequestDispatcher("index.jsp").include(request, response);
