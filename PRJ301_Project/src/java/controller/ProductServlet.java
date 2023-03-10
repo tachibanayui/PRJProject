@@ -49,7 +49,7 @@ public class ProductServlet extends HttpServlet {
                 request.setAttribute("product", p);
                 request.getRequestDispatcher("/product.jsp").include(request, response);
             } else {
-                response.sendRedirect("/");
+                response.sendRedirect("/index");
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -72,7 +72,7 @@ public class ProductServlet extends HttpServlet {
             if (username != null) {
                 Product p = ServletUtils.getProduct(request.getPathInfo(), dp);
                 if (p == null) {
-                    response.sendRedirect("/");
+                    response.sendRedirect("/index");
                 } else {
                     String sQuantity = request.getParameter("quantity");
                     int xQuantity = Integer.parseInt(sQuantity);

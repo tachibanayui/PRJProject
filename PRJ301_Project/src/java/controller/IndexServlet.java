@@ -24,7 +24,7 @@ import utils.ServletUtils;
  *
  * @author Yui
  */
-@WebServlet(name = "IndexServlet", urlPatterns = {"/"})
+@WebServlet(name = "IndexServlet", urlPatterns = {"/index"})
 public class IndexServlet extends HttpServlet {
  private ProductsDAO dp;
     private CategoriesDAO dc;

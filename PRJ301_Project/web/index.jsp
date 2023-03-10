@@ -8,58 +8,124 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>nakadashi store</title>
+        <title>Dashi Store</title>
+        <link rel="stylesheet" href="..<%=request.getContextPath()%>/css/style.css"/>
+        <link rel="stylesheet" href="..<%=request.getContextPath()%>/css/all.css"/>
+        <link rel="stylesheet" href="..<%=request.getContextPath()%>/css/normalize.css"/>
+        <script src="https://kit.fontawesome.com/fee9a9087e.js" crossorigin="anonymous"></script>
     </head>
     <body>
+        <!-- Navbar & Header Section -->
 
-        <c:if test="${username != null}">
-            <h1>Hello: ${username}!</h1>
-            <a href="logout">Logout</a>
-        </c:if>
-        <c:if test="${username == null}">
-            <h1>Please login: </h1>
-            <a href="login">Login</a>
-        </c:if>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="index"><img src="img/logo.png" alt="Red Store"></a>
+                </div>
+                <nav>
+                    <ul id="menuItems">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="">About</a></li>
+                        <li><a href="">Contact</a></li>
+                        <c:if test="${username != null}">
+                        <li><a href="cart">Cart</a></li>
+                        <li><a href="logout">Logout</a></li>
+                        </c:if>
+                        <c:if test="${username == null}">
+                        <li><a href="login">Log In</a></li>
+                        <li><a href="register">Sign Up</a></li>
+                        </c:if>
+                    </ul>
+                </nav>
+                <img src="img/menu.png" class="menuicon" alt="Menu icon" onclick="menuToggle();">
+            </div>
+        </div>
 
-        <form action="/" method="GET">
-            Search <input type="text" name="search" value="${search}"/>
-            <br/>
-            Sort 
-            <select name="sort">
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
-            <br/>
-            Filters: 
-            <br/>
-            Category:
-            <select name="category">
-                <c:forEach var="catItem" items="${categories}">
-                    <c:if test="${catItem.categoryID.toString().equals(category)}">
-                        <option value="${catItem.categoryID}" selected>${catItem.categoryName}</option>
-                    </c:if>
-                    <c:if test="${!catItem.categoryID.toString().equals(category)}">
-                        <option value="${catItem.categoryID}">${catItem.categoryName}</option>
-                    </c:if>
+        <!-- Featured Products Section -->
+
+        <div class="smallContainer">
+            <div class="row row-2">
+                <h2>All Product</h2>
+                <form action="index" method="get">
+                    <input type="text" placeholder="Enter Product Name" name="search" value="${search}">
+                    <select name="sort">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                    <input type="number" name="priceLow" placeholder="From Price">
+                    <input type="number" name="priceHigh" placeholder="To Price">
+                    <select name="category">
+                        <c:forEach var="catItem" items="${categories}">
+                            <option value="${catItem.categoryID}">${catItem.categoryName}</option>
+                        </c:forEach>
+                    </select>
+                    <input type="submit" value="Search"/>
+                </form>
+            </div>
+            <div class="row">
+                <c:forEach var="p" items="${requestScope.products}">
+                    <div class="col-4">
+                        <a href="product/${p.productID}">
+                        <img src="${p.imageUrl}" alt="">
+                        <h4>${p.productName}</h4>
+                        <p>${p.unitPrice}<span class="lastprice">${p.unitPrice*1.25}</span></p>
+                        </a>
+                    </div>
                 </c:forEach>
-            </select>
-            <br/>
-            Price
-            <input type="number" name="priceLow" placeholder="low" value="${priceLow}"/>
-            <input type="number" name="priceHigh" placeholder="high" value="${priceHigh}"/>
-            <br/>
-            Page:
-            <input type="number" name="page" value="${page}"/>
-            <br />
-            <input type="submit" value="Search"/>
-        </form>
+            </div>
+            <div class="page-btn">
+                <span>1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>4</span>
+            </div>   
+        </div>
 
-        <c:forEach var="p" items="${products}">
-            <p>${p.productName}</p>
-        </c:forEach>
+        <!-- Footer Section -->
 
-        <p>${count}</p>
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col-1">
+                        <h3>Download Our App</h3>
+                        <p>Download App for Android and ios mobile phone</p>
+                        <div class="app-logo">
+                            <img src="img/play-store.png">
+                            <img src="img/app-store.png">
+                        </div>
+                    </div>
+                    <div class="footer-col-2">
+                        <img src="img/logo-white.png" alt="">
+                        <p>Our Purpose Is To Sustainably Make The Pleasure and Benefits of Smart Phones Accessible to The Many.</p>
+                    </div>
+                    <div class="footer-col-3">
+                        <h3>Useful Links</h3>   
+                        <ul>
+                            <li><a href="">Coupons</a></li>
+                            <li><a href="">Blog Post</a></li>
+                            <li><a href="">Return Policy</a></li>
+                            <li><a href="">Join Affiliate</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col-4">
+                        <h3>Follow Us</h3>
+                        <ul>
+                            <li><a href="">Facebook</a></li>
+                            <li><a href="">Linked In</a></li>
+                            <li><a href="">Instagram</a></li>
+                            <li><a href="">YouTube</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <p class="copyright">Copyright &copy; 2023 - Karala, sharpi, Nguyen Quang Huy</p>
+            </div>
+        </div>
+        <script src="js/all.js"></script>
+        <script src="js/jquery-3.5.1.min.js"></script>
+        <script src="js/myscript.js"></script>
     </body>
 </html>
