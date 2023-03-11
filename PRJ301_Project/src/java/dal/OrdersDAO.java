@@ -55,13 +55,13 @@ public class OrdersDAO extends MyDAO {
            toQuery = String.format("OrderDate <= %s", fromQuery);
        }
        
-       xSql = String.format( "select count(*) from Orders where Username = ? and %s and %s", fromQuery, toQuery);
+       xSql = String.format( "select count(distinct OrderID)as[numOrd] from Orders where Status <> 0 and Username = ? and %s and %s", fromQuery, toQuery);
        this.ps = this.connection.prepareStatement(xSql);
        ps.setString(1, username);
        this.rs = ps.executeQuery();
        
        if(rs.next()) {
-           return rs.getInt(1);
+           return rs.getInt("numOrd");
        } else {
            return -1;
        }

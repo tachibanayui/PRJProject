@@ -7,6 +7,7 @@ package dal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Ord;
 import model.OrderDetail;
 import model.Product;
 
@@ -15,7 +16,6 @@ import model.Product;
  * @author Viet
  */
 public class OrderDetailsDAO extends MyDAO {
-
     public List<OrderDetail> getDetails(int orderId) throws SQLException {
         this.xSql = "Select * from OrderDetails where OrderID = ?";
         this.ps = this.connection.prepareStatement(xSql);
@@ -26,6 +26,21 @@ public class OrderDetailsDAO extends MyDAO {
         while (rs.next()) {
             OrderDetail od = new OrderDetail(rs.getInt("OrderID"), rs.getInt("ProductID"), rs.getInt("Quantity"), rs.getInt("UnitPrice"));
             result.add(od);
+        }
+
+        return result;
+    }
+    public List<Ord> getDetail(int orderId) throws SQLException {
+        this.xSql = "Select * from OrderDetails where OrderID = ?";
+        this.ps = this.connection.prepareStatement(xSql);
+        this.ps.setInt(1, orderId);
+        this.rs = this.ps.executeQuery();
+
+        ArrayList<Ord> result = new ArrayList<>();
+        ProductsDAO pd = new ProductsDAO();
+        while (rs.next()) {
+            Product p = pd.getProduct(rs.getInt("productID"));
+            result.add(new Ord(rs.getInt("orderid"), p, rs.getInt("quantity"), rs.getDouble("unitprice")));
         }
 
         return result;

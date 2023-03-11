@@ -6,6 +6,7 @@ package controller;
 
 import dal.OrderDetailsDAO;
 import dal.OrdersDAO;
+import dal.ProductsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,12 +16,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Ord;
 import model.Order;
 import model.OrderDetail;
+import model.Product;
 import utils.ServletUtils;
 
 /**
@@ -32,7 +36,7 @@ public class OrdersServlet extends HttpServlet {
 
     OrdersDAO dord;
     OrderDetailsDAO dod;
-
+    ProductsDAO pd;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,15 +65,13 @@ public class OrdersServlet extends HttpServlet {
                 } catch (Exception e) {}
                 
                 List<Order> os = dord.getOrderList(username, from, to, page, 10);
-                HashMap<Integer, List<OrderDetail>> ods = new HashMap<>();
-                
+                HashMap<Integer, List<Ord>> ods = new HashMap<>();
                 for (Order o : os) {
-                    List<OrderDetail> x = dod.getDetails(o.getOrderID());
+                    List<Ord> x = dod.getDetail(o.getOrderID());
                     ods.put(o.getOrderID(), x);
                 }
                 
                 int count = dord.getOrderListCount(username, from, to);
-                
                 request.setAttribute("orders", os);
                 request.setAttribute("details", ods);
                 request.setAttribute("count", count);
@@ -140,6 +142,7 @@ public class OrdersServlet extends HttpServlet {
         super.init(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         dord = new OrdersDAO();
         dod = new OrderDetailsDAO();
+        pd = new ProductsDAO();
     }
 
 }

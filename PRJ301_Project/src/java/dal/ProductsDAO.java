@@ -21,7 +21,7 @@ public class ProductsDAO extends MyDAO {
         }
         
         String queryCategory = "1 = 1";
-        if(categoryId != -1) {
+        if(categoryId != 1) {
             queryCategory = String.format("CategoryId = %d", categoryId);
         }
         
@@ -31,7 +31,7 @@ public class ProductsDAO extends MyDAO {
         }
         
         String queryPriceHigh= "1 = 1";
-        if(priceLow != -1) {
+        if(priceHigh != -1) {
             queryPriceHigh = String.format("UnitPrice <= %f", priceHigh);
         }
         
@@ -44,10 +44,9 @@ public class ProductsDAO extends MyDAO {
         this.xSql = String.format("Select * from Products where %s and %s and %s and %s order by UnitPrice %s offset %d rows fetch next %d rows only", queryName, queryCategory, queryPriceLow, queryPriceHigh, sort, offset, limit);
         ps = this.connection.prepareStatement(this.xSql);
         this.rs = this.ps.executeQuery();
-        
         ArrayList<Product> result = new ArrayList<>();
         while(this.rs.next()) {
-            Product p = new Product(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getString("ImageUrl"), rs.getInt("UnitsInStock"), rs.getDouble("UnitPrice"), rs.getInt("CategoryID"));
+            Product p = new Product(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getString("ImageUrl"), rs.getInt("UnitsInStock"), rs.getDouble("UnitPrice"), rs.getInt("CategoryID"), rs.getString("Description"));
             result.add(p);
         }
         
@@ -61,7 +60,7 @@ public class ProductsDAO extends MyDAO {
         }
         
         String queryCategory = "1 = 1";
-        if(categoryId != (-1)) {
+        if(categoryId != 1) {
             queryCategory = String.format("CategoryId = %d", categoryId);
         }
         
@@ -71,7 +70,7 @@ public class ProductsDAO extends MyDAO {
         }
         
         String queryPriceHigh= "1 = 1";
-        if(priceLow != -1) {
+        if(priceHigh != -1) {
             queryPriceHigh = String.format("UnitPrice <= %f", priceHigh);
         }
         
@@ -93,7 +92,7 @@ public class ProductsDAO extends MyDAO {
         this.rs = this.ps.executeQuery();
         
         if(rs.next()) {
-            Product d = new Product(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getString("ImageUrl"), rs.getInt("UnitsInStock"), rs.getDouble("UnitPrice"), rs.getInt("CategoryID"));
+            Product d = new Product(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getString("ImageUrl"), rs.getInt("UnitsInStock"), rs.getDouble("UnitPrice"), rs.getInt("CategoryID"), rs.getString("Description"));
             return d;
         }
         

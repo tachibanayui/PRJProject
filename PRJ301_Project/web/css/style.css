@@ -362,6 +362,7 @@ input:focus{
     background: #ff523b;
     color: #fff;
 }
+
 /* single product details */
 .single-product{
     margin-top: 80px;
@@ -388,7 +389,7 @@ input:focus {
     outline:none;
 }
 .single-product input[type="submit"]{
-    width: 200px;
+    width: 300px;
     border-radius: 5px;
     background-color: white;
 }
@@ -412,22 +413,22 @@ table{
     flex-wrap: wrap;
 }
 
-th{
+.cart th{
     text-align: left;
     padding: 5px;
     color: #fff;
     background-color: #ff523b;
     font-weight: normal;
 }
-td{
+.cart td{
     padding: 10px 5px;
 }
-td input[type="number"]{
+.cart td input[type="number"]{
     width: 40px;
     height: 30px;
     padding: 5px;
 }
-td img{
+.cart td img{
     width: 80px;
     height: 80px;
     margin-right: 10px;
@@ -442,24 +443,44 @@ td img{
     width: 100%;
     max-width: 200px;
 }
-td:last-child{
-    text-align: right;
-}
-th:last-child{
-    text-align: right;
-}
 .cart td:last-child{
     text-align: center;
 }
 .cart th:last-child{
     text-align: center;
 }
-.option{
+ .option{
     margin-left: 100px;
     margin-right: 55px;
 }
 .cart-page input[type="submit"]{
     width: 110px;
+}
+
+/*----- Order History -----*/
+.order-page{
+    margin: 80px auto;
+}
+.order td{
+    padding: 10px 5px;
+}
+.order th{
+    padding: 5px;
+    color: #fff;
+    background-color: #ff523b;
+    font-weight: normal;
+}
+.order td img{
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+}
+.order th:last-child{
+    text-align: center;
+}
+.order-info{
+    display: flex;
+    flex-wrap: wrap;
 }
 /*Start Responsive*/
 .menuicon{

@@ -29,6 +29,7 @@
                         <li><a href="">Contact</a></li>
                         <c:if test="${sessionScope.username != null}">
                             <li><a href="/cart">Cart</a></li>
+                            <li><a href="<%=request.getContextPath()%>/orders">Orders</a></li>
                             <li><a href="<%=request.getContextPath()%>/logout">Logout</a></li>
                         </c:if>
                         <c:if test="${sessionScope.username == null}">
@@ -60,7 +61,7 @@
                     <h4>
                         Detail <i class="fa fa-indent"></i>
                     </h4>
-                    <p>iPhone 14 Pro Max là mẫu flagship nổi bật nhất của Apple trong lần trở lại năm 2022 với nhiều cải tiến về công nghệ cũng như vẻ ngoài cao cấp, sang chảnh hợp với gu thẩm mỹ đại chúng. Những chiếc điện thoại đến từ nhà Táo Khuyết nhận được rất nhiều sự kỳ vọng của thị trường ngay từ khi chưa ra mắt. Vậy liệu những chiếc flagship đến từ công ty công nghệ hàng đầu thế giới này có làm bạn thất vọng? Cùng khám phá những điều thú vị về iPhone 14 Pro Max ở bài viết dưới đây nhé.</p>
+                        <p>${product.description}</p>
                 </div>
             </div>
         </div>
@@ -80,7 +81,7 @@
                         </div>
                     </div>
                     <div class="footer-col-2">
-                        <img src="<%=request.getContextPath()%>/img/logo-white.png" alt="">
+                        <img src="<%=request.getContextPath()%>/img/logo.png" alt="">
                         <p>Our Purpose Is To Sustainably Make The Pleasure and Benefits of Smart Phones Accessible to The Many.</p>
                     </div>
                     <div class="footer-col-3">
@@ -103,11 +104,8 @@
                     </div>
                 </div>
                 <hr>
-                <p class="copyright">Copyright &copy; 2023 - Karala</p>
+                <p class="copyright">Copyright &copy; 2023 - Karala, sharpi, Nguyen Quang Huy</p>
             </div>
         </div>
-        <script src="js/all.js"></script>
-        <script src="js/jquery-3.5.1.min.js"></script>
-        <script src="js/myscript.js"></script>
     </body>
 </html>

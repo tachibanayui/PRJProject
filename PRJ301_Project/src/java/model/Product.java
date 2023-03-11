@@ -14,18 +14,28 @@ public class Product {
     private int UnitsInStock;
     private double UnitPrice;
     private int CategoryID;
-
+    private String Description;
     public Product() {
     }
 
-    public Product(int ProductID, String ProductName, String ImageUrl, int UnitsInStock, double UnitPrice, int CategoryID) {
+    public Product(int ProductID, String ProductName, String ImageUrl, int UnitsInStock, double UnitPrice, int CategoryID, String Description) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
         this.ImageUrl = ImageUrl;
         this.UnitsInStock = UnitsInStock;
         this.UnitPrice = UnitPrice;
         this.CategoryID = CategoryID;
+        this.Description = Description;
     }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String Description) {
+        this.Description = Description;
+    }
+
 
     public int getProductID() {
         return ProductID;

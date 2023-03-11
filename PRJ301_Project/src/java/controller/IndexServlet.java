@@ -35,11 +35,10 @@ public class IndexServlet extends HttpServlet {
             String sPriceLow = ServletUtils.getParamSetAttr(request, "priceLow");
             String sPriceHigh = ServletUtils.getParamSetAttr(request, "priceHigh");
             String sPage = ServletUtils.getParamSetAttr(request, "page");
-            
             String sSearch = ServletUtils.getParamSetAttr(request, "search");
             boolean xSort = sSort != null && sSort.equals("asc");
             
-            int xCat = -1;
+            int xCat = 1;
             try {
                 xCat = Integer.parseInt(sCategory);
             } catch (Exception e ){}
@@ -59,12 +58,16 @@ public class IndexServlet extends HttpServlet {
                xPage = Integer.parseInt(sPage) - 1;
             } catch (Exception e) {}
             
-            List<Product> ps = dp.getProductList(sSearch, xCat, xLow, xHigh, xPage, 10, xSort);
-            int count = dp.getProductListCount(sPage, xCat, xLow, xHigh, xPage, 10, xSort);
+            List<Product> ps = dp.getProductList(sSearch, xCat, xLow, xHigh, xPage, 8, xSort);
+            int count = dp.getProductListCount(sSearch, xCat, xLow, xHigh, xPage, 8, xSort);
+            request.setAttribute("sort", sSort);
+            request.setAttribute("category", sCategory);
+            request.setAttribute("low", sPriceLow);
+            request.setAttribute("high", sPriceHigh);
+            request.setAttribute("page", sPage);
             request.setAttribute("categories", dc.getCategories());
             request.setAttribute("products", ps);
             request.setAttribute("count", count);
-            
             request.setAttribute("search", sSearch);
             request.getRequestDispatcher("index.jsp").include(request, response);
         } catch (SQLException ex) {

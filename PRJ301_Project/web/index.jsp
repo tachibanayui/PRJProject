@@ -16,6 +16,18 @@
         <link rel="stylesheet" href="..<%=request.getContextPath()%>/css/all.css"/>
         <link rel="stylesheet" href="..<%=request.getContextPath()%>/css/normalize.css"/>
         <script src="https://kit.fontawesome.com/fee9a9087e.js" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            function myFunc(id){
+                console.log(id);
+                var form=document.getElementById('form');//retrieve the form as a DOM element
+                var input = document.createElement('input');//prepare a new input DOM element
+                input.setAttribute('name', 'page');//set the param name
+                input.setAttribute('value', id);//set the value
+                input.setAttribute('type', 'hidden');//set the type, like "hidden" or other
+                form.appendChild(input);//append the input to the form
+                form.submit();//send with added input
+            }
+        </script>
     </head>
     <body>
         <!-- Navbar & Header Section -->
@@ -32,6 +44,7 @@
                         <li><a href="">Contact</a></li>
                         <c:if test="${username != null}">
                         <li><a href="cart">Cart</a></li>
+                        <li><a href="orders">Orders</a></li>
                         <li><a href="logout">Logout</a></li>
                         </c:if>
                         <c:if test="${username == null}">
@@ -49,17 +62,17 @@
         <div class="smallContainer">
             <div class="row row-2">
                 <h2>All Product</h2>
-                <form action="index" method="get">
+                <form action="index" method="get" id="form">
                     <input type="text" placeholder="Enter Product Name" name="search" value="${search}">
                     <select name="sort">
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
+                        <option value="asc" ${sort=="asc"?"selected":""}>Ascending</option>
+                        <option value="desc" ${sort=="desc"?"selected":""}>Descending</option>
                     </select>
-                    <input type="number" name="priceLow" placeholder="From Price">
-                    <input type="number" name="priceHigh" placeholder="To Price">
+                    <input type="number" name="priceLow" placeholder="From Price" value="${(low==0 || low==null)?low:""}">
+                    <input type="number" name="priceHigh" placeholder="To Price" value="${(high==0 || high==null)?high:""}">
                     <select name="category">
                         <c:forEach var="catItem" items="${categories}">
-                            <option value="${catItem.categoryID}">${catItem.categoryName}</option>
+                            <option value="${catItem.categoryID}" ${catItem.categoryID==category?"selected":""}>${catItem.categoryName}</option>
                         </c:forEach>
                     </select>
                     <input type="submit" value="Search"/>
@@ -71,16 +84,16 @@
                         <a href="product/${p.productID}">
                         <img src="${p.imageUrl}" alt="">
                         <h4>${p.productName}</h4>
-                        <p>${p.unitPrice}<span class="lastprice">${p.unitPrice*1.25}</span></p>
+                        <p>${String.format("%10.0f",p.unitPrice)} <span class="lastprice">${String.format("%10.0f",p.unitPrice*1.25)}</span></p>
                         </a>
                     </div>
                 </c:forEach>
             </div>
             <div class="page-btn">
-                <span>1</span>
-                <span>2</span>
-                <span>3</span>
-                <span>4</span>
+                <c:set var="numP" value="${Math.ceil(count/8)}"></c:set>
+                <c:forEach begin="1" end="${numP}" var="i">
+                    <a onclick="myFunc('${i}')"><span>${i}</span></a>
+                </c:forEach>
             </div>   
         </div>
 
@@ -98,7 +111,7 @@
                         </div>
                     </div>
                     <div class="footer-col-2">
-                        <img src="img/logo-white.png" alt="">
+                        <img src="img/logo.png" alt="">
                         <p>Our Purpose Is To Sustainably Make The Pleasure and Benefits of Smart Phones Accessible to The Many.</p>
                     </div>
                     <div class="footer-col-3">
@@ -123,9 +136,6 @@
                 <hr>
                 <p class="copyright">Copyright &copy; 2023 - Karala, sharpi, Nguyen Quang Huy</p>
             </div>
-        </div>
-        <script src="js/all.js"></script>
-        <script src="js/jquery-3.5.1.min.js"></script>
-        <script src="js/myscript.js"></script>
+        </div>   
     </body>
 </html>
